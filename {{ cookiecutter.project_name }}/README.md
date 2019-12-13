@@ -12,7 +12,7 @@ project_owner [<your google cloud id>]:  <your google cloud id>
 billing_account [<your billing account>]: <your billing account>
 ```
 
-## 
+## bootstrap the CICD project
 ```
 cd petstore/cicd
 terraform init
@@ -41,6 +41,31 @@ use this backend unless the backend configuration changes.
 ## push to google cloud repository
 
 ```
-git add remote origin https://
+git init
+git add .
+git commit -m 'bootstrap build'
+git add remote origin https://source.developers.google.com/p/{{cookiecutter.project_name}}-cicd/r/cicd
+git push --set-upstream origin master
+```
+
+## bootstrap the infrastructure project
+```
+cd ../infrastructure
+terraform init
+terraform workspace new master
+terraform apply -auto-approve
+```
+
+## push to google cloud repository
 
 ```
+git init
+git add .
+git commit -m 'bootstrap build'
+git add remote origin https://source.developers.google.com/p/{{cookiecutter.project_name}}-cicd/r/infrastructure
+git push --set-upstream origin master
+```
+
+# Conclusion
+Done! Now you have a completely serverless and automated CI/CD pipeline
+
