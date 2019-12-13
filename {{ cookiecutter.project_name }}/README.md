@@ -1,4 +1,4 @@
-serverless CI/CD pipeline for {{cookiecutter.project_name} on Google Cloud Platform
+serverless CI/CD pipeline for {{cookiecutter.project_name}} on Google Cloud Platform
 ===================================================================================
 
 
