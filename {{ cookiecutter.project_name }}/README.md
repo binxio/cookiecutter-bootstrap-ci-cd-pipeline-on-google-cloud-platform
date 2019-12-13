@@ -55,6 +55,16 @@ terraform init
 terraform workspace new master
 terraform apply -auto-approve
 ```
+## add test environment
+```
+terraform workspace new test
+terraform apply -auto-approve
+```
+## add production environment
+```
+terraform workspace new test
+terraform apply -auto-approve
+```
 
 ## push to google cloud repository
 
