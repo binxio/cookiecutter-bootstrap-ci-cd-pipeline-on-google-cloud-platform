@@ -3,9 +3,9 @@
 # GCP project definition for CICD pipelines of an application
 #
 resource "google_project" "cicd" {
-  name            = "{{ cookiecutter.project_name }}"
-  project_id      = "{{ cookiecutter.project_name }}"
-  billing_account = "{{ cookiecutter.billing_account }}"
+  name            = var.project_name
+  project_id      = var.project_name
+  billing_account = var.billing_account
 }
 
 resource "google_storage_bucket" "terraform_state" {
@@ -34,13 +34,23 @@ resource "google_project_service" "containerregistry" {
   project = google_project.cicd.project_id
 }
 
+resource "google_project_service" "cloudresourcemanager" {
+  service = "cloudresourcemanager.googleapis.com"
+  project = google_project.cicd.project_id
+}
+
+resource "google_project_service" "serviceusage" {
+  service = "serviceusage.googleapis.com"
+  project = google_project.cicd.project_id
+}
 #
-# The entire IAM policy of the CICD project is managed by terraform
+# IAM policy bindings
 #
 resource "google_project_iam_binding" "owner" {
   role = "roles/owner"
   members = [
-    "user:{{cookiecutter.project_owner}}",
+    "user:${var.project_owner}",
     "serviceAccount:${google_project.cicd.number}@cloudbuild.gserviceaccount.com",
   ]
+  project = google_project.cicd.project_id
 }

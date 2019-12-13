@@ -3,25 +3,25 @@ cookiecutter for a a serverless CI/CD pipeline on Google Cloud Platform
 template for a serverless CI/CD pipeline on Google Cloud Platform
 
 
-## installation instructions
+## instruction
 
 ```
 cookiecutter https://github.com/binxio/cookiecutter-bootstrap-ci-cd-pipeline-on-google-cloud-platform.git
-project_name [serverless-app]: petstore
-project_owner [<your google cloud id>]:  <your google cloud id>
-billing_account [<your billing account>]: <your billing account>
+project_name [serverless-app-cicd]: petstore-cicd
+project_owner [mvanholsteijn@xebia.com]:  <your google id>
+billing_account []: <your billing account>
 ```
 
 ## 
 ```
-cd petstore/cicd
+cd petstore-cicd
 terraform init
 terraform apply -auto-approve
 ```
 
 ## activate backend storage
 ```
-sed -i ''  -e 's/#//' provider.tf
+sed -i ''  -e 's/#/ /' provider.tf
 terraform init
 Initializing the backend...
 Do you want to copy existing state to the new backend?
@@ -37,10 +37,3 @@ Successfully configured the backend "gcs"! Terraform will automatically
 use this backend unless the backend configuration changes.
 ```
 
-
-## push to google cloud repository
-
-```
-git add remote origin https://
-
-```

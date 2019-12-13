@@ -1,5 +1,5 @@
 {
-    "project_name": "serverless-app-cicd",
-    "project_owner": "mvanholsteijn@xebia.com",
-    "billing_account": ""
+    "project_name": "serverless-app",
+    "project_owner": "<your google cloud id>",
+    "billing_account": "<your billing account>"
 }
