@@ -61,9 +61,12 @@ resource "google_sourcerepo_repository_iam_policy" "infrastructure" {
 
 data "google_iam_policy" "sourcerepo_infrastructure" {
   binding {
-    role    = "roles/source.writer"
-    members = []
+    role = "roles/source.writer"
+    members = [
+      "serviceAccount:${google_service_account.docker_image_updater.email}"
+    ]
   }
+
   binding {
     role = "roles/source.admin"
     members = [
