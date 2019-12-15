@@ -18,8 +18,8 @@ resource "google_cloudbuild_trigger" "cicd" {
 }
 
 resource "google_sourcerepo_repository_iam_policy" "cicd" {
-  project     = google_sourcerepo_repository.infrastructure.project
-  repository  = google_sourcerepo_repository.infrastructure.name
+  project     = google_sourcerepo_repository.cicd.project
+  repository  = google_sourcerepo_repository.cicd.name
   policy_data = data.google_iam_policy.cicd.policy_data
 }
 
