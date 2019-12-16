@@ -12,12 +12,12 @@ resource "google_service_account" "cloud_run_pubsub_invoker" {
 
 resource "google_service_account" "docker_image_updater" {
   display_name = "GCR docker image updater"
-  account_id   = "gcr-docker-image-updater"
+  account_id   = "container-image-reference-updater"
   project      = module.project.project_id
 }
 
 resource "google_cloud_run_service" "docker_image_updater" {
-  name     = "gcr-docker-image-updater"
+  name     = "container-image-reference-updater"
   location = "us-central1"
 
   template {
@@ -25,7 +25,7 @@ resource "google_cloud_run_service" "docker_image_updater" {
       container_concurrency = 1
       service_account_name  = google_service_account.docker_image_updater.email
       containers {
-        image = "gcr.io/${module.project.project_id}/gcr-docker-image-updater:0.0.0"
+        image = "binxio/container-image-reference-updater:0.1.0"
         env {
           name  = "REPOSITORY_NAME"
           value = "infrastructure"
@@ -67,26 +67,10 @@ resource "google_pubsub_subscription" "gcr" {
   project = module.project.project_id
 }
 
-# required to bootstrap the gcr-docker-image-updater
+# required to create the Docker Container Registry bucket
 resource null_resource "initialize_container_registry_bucket" {
   provisioner "local-exec" {
-    command = "docker pull  ${local.src_image}; docker tag ${local.src_image} ${local.image}; docker push ${local.image}"
-  }
-}
-
-resource "google_cloudbuild_trigger" "gcr_docker_image_updater_build" {
-  name    = "gcr-docker-imager-updater-deploy"
-  project = google_sourcerepo_repository.infrastructure.project
-  build {
-    step {
-      name = "gcr.io/cloud-builders/git"
-      args = ["clone", "https://github.com/binxio/gcr-docker-image-updater.git", "."]
-    }
-    step {
-      name       = "gcr.io/cloud-builders/docker"
-      entrypoint = "/bin/bash"
-      args       = ["make", "REGISTRY_HOST=gcr.io", "USERNAME=${module.project.project_id}", "snapshot"]
-    }
+    command = "docker pull alpine:latest; docker tag alpine:latest gcr.io/${module.project.project_id}/alpine:latest; docker push gcr.io/${module.project.project_id}/alpine:latest"
   }
 }
 
@@ -95,13 +79,7 @@ resource "google_storage_bucket_iam_binding" "container_registry_viewer" {
   role   = "roles/storage.objectViewer"
 
   members = [
-    "serviceAccount:${local.cloud_run_service_account}"
+    "serviceAccount:service-${module.project.number}@serverless-robot-prod.iam.gserviceaccount.com"
   ]
   depends_on = [null_resource.initialize_container_registry_bucket]
-}
-
-locals {
-  src_image                 = "binxio/gcr-docker-image-updater:0.0.0"
-  image                     = "gcr.io/${module.project.project_id}/gcr-docker-image-updater:0.0.0"
-  cloud_run_service_account = "service-${module.project.number}@serverless-robot-prod.iam.gserviceaccount.com"
 }
