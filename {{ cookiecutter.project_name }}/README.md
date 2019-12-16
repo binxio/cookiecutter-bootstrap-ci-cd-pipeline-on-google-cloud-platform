@@ -31,10 +31,6 @@ use this backend unless the backend configuration changes.
 ## push to google cloud repository
 
 ```
-git init
-git add .
-git commit -m 'bootstrap build'
-git add remote origin https://source.developers.google.com/p/{{cookiecutter.project_name}}-cicd/r/cicd
 git push --set-upstream origin master
 ```
 
@@ -59,13 +55,8 @@ terraform apply -auto-approve
 ## push to google cloud repository
 
 ```
-git init
-git add .
-git commit -m 'bootstrap build'
-git add remote origin https://source.developers.google.com/p/{{cookiecutter.project_name}}-cicd/r/infrastructure
 git push --set-upstream origin master
 ```
 
 # Conclusion
 Done! Now you have a completely serverless and automated CI/CD pipeline
-

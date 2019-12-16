@@ -1,7 +1,5 @@
-
-module "project" {
-  source          = "./project"
-  project_name    = "{{cookiecutter.project_name}}-${terraform.workspace}"
-  project_owner   = "{{cookiecutter.project_owner}}"
+resource "google_project" "infrastructure" {
+  name            = "{{cookiecutter.project_name}}-${terraform.workspace}"
+  project_id      = "{{cookiecutter.project_name}}-${terraform.workspace}"
   billing_account = "{{cookiecutter.billing_account}}"
 }
