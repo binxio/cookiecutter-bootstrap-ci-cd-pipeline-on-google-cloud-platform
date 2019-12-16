@@ -4,7 +4,7 @@ steps:
     args: ['init']
 
   - name: 'docker.io/hashicorp/terraform:0.12.18'
-    args: ['workspace']
+    args: ['workspace', 'select', '${BRANCH_NAME}']
 
   - name: 'docker.io/hashicorp/terraform:0.12.18'
     args: ['apply', '-auto-approve']
