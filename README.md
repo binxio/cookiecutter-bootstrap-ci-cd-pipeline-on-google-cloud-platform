@@ -1,4 +1,4 @@
-cookiecutter for a a serverless CI/CD pipeline on Google Cloud Platform
+cookiecutter for a serverless CI/CD pipeline on Google Cloud Platform
 =======================================================================
 template for a serverless CI/CD pipeline on Google Cloud Platform
 
