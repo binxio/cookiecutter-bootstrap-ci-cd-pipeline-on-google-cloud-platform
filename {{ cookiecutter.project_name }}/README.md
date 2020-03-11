@@ -48,7 +48,7 @@ terraform apply -auto-approve
 ```
 ## add production environment
 ```
-terraform workspace new test
+terraform workspace new production
 terraform apply -auto-approve
 ```
 
