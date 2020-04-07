@@ -22,6 +22,7 @@ resource "google_sourcerepo_repository_iam_policy" "cicd" {
   project     = google_sourcerepo_repository.cicd.project
   repository  = google_sourcerepo_repository.cicd.name
   policy_data = data.google_iam_policy.cicd.policy_data
+  depends_on = [google_project_service.iam]
 }
 
 data "google_iam_policy" "cicd" {
@@ -59,6 +60,7 @@ resource "google_sourcerepo_repository_iam_policy" "infrastructure" {
   project     = google_sourcerepo_repository.infrastructure.project
   repository  = google_sourcerepo_repository.infrastructure.name
   policy_data = data.google_iam_policy.sourcerepo_infrastructure.policy_data
+  depends_on = [google_project_service.iam]
 }
 
 data "google_iam_policy" "sourcerepo_infrastructure" {

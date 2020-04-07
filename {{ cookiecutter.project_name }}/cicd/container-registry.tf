@@ -13,5 +13,5 @@ resource "google_storage_bucket_iam_binding" "container_registry_viewer" {
   members = [
     "serviceAccount:service-${google_project.cicd.number}@serverless-robot-prod.iam.gserviceaccount.com"
   ]
-  depends_on = [null_resource.initialize_container_registry_bucket]
+  depends_on = [null_resource.initialize_container_registry_bucket, google_project_service.iam]
 }

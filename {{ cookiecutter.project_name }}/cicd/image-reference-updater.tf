@@ -53,6 +53,7 @@ resource "google_cloud_run_service_iam_binding" "image_reference_updater_invoker
   project  = google_project.cicd.project_id
   service  = google_cloud_run_service.image_reference_updater.name
   location = google_cloud_run_service.image_reference_updater.location
+  depends_on = [google_project_service.iam]
 }
 
 resource "google_pubsub_subscription" "gcr" {
