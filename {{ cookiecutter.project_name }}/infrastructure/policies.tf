@@ -15,5 +15,5 @@ resource "google_project_iam_binding" "viewer" {
 }
 
 data google_project "cicd" {
-  project_id = "my-serverless-app-cicd"
+  project_id = "{{cookiecutter.project_name}}-cicd"
 }
